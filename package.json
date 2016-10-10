@@ -5,8 +5,8 @@
   "main": "app.js",
   "scripts": {
     "start": "./bin/start",
-    "test": "./node_modules/.bin/mocha test/* --compilers coffee:coffee-script/register",
-    "build": "./node_modules/.bin/coffee --compile --output lib/ src/",
+    "test": "./bin/test",
+    "build": "./bin/build",
   },
   "author": "daniel",
   "license": "ISC",
