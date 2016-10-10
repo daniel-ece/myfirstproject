@@ -39,3 +39,11 @@ or
 npm test
 ```
 
+## Build
+```
+bin/build
+```
+or
+```
+npm build
+```
