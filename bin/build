@@ -1,0 +1,4 @@
+#!/bin/bash
+# This script allows us to compile a directory recursively (src/) and output all
+# resulting js files (lib/)
+./node_modules/.bin/coffee --compile --output ./lib ./src
