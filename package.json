@@ -4,8 +4,9 @@
   "description": "node test",
   "main": "app.js",
   "scripts": {
-    "start": "node ./src/app.js",
-    "test": "./node_modules/.bin/mocha test/* --compilers coffee:coffee-script/register"
+    "start": "./bin/start",
+    "test": "./node_modules/.bin/mocha test/* --compilers coffee:coffee-script/register",
+    "build": "./node_modules/.bin/coffee --compile --output lib/ src/",
   },
   "author": "daniel",
   "license": "ISC",
