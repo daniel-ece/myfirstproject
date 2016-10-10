@@ -5,8 +5,12 @@
   "main": "app.js",
   "scripts": {
     "start": "node ./src/app.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "mocha test/*"
   },
   "author": "daniel",
-  "license": "ISC"
+  "license": "ISC",
+  "dependencies": {
+    "mocha": "^3.1.1",
+    "should": "^11.1.0"
+  }
 }
