@@ -1,5 +1,7 @@
 # My first project using NodeJS and Coffee-script
 
+![Build](https://travis-ci.org/daniel-ece/myfirstproject.svg?branch=master)
+
 Simple demo that displays a page "Hello Daniel" using javascript(NodeJS) and coffee-script
 
 ## Requirement
