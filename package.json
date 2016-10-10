@@ -5,11 +5,12 @@
   "main": "app.js",
   "scripts": {
     "start": "node ./src/app.js",
-    "test": "mocha test/*"
+    "test": "./node_modules/.bin/mocha test/test.js --compilers coffee:coffee-script/register"
   },
   "author": "daniel",
   "license": "ISC",
   "dependencies": {
+    "coffee-script": "^1.11.1",
     "mocha": "^3.1.1",
     "should": "^11.1.0"
   }
