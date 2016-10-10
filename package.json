@@ -5,7 +5,7 @@
   "main": "app.js",
   "scripts": {
     "start": "node ./src/app.js",
-    "test": "./node_modules/.bin/mocha test/test.js --compilers coffee:coffee-script/register"
+    "test": "./node_modules/.bin/mocha test/* --compilers coffee:coffee-script/register"
   },
   "author": "daniel",
   "license": "ISC",
