@@ -5,7 +5,7 @@
   "main": "src/app.coffee",
   "scripts": {
     "start": "bin/start",
-    "test": "bin/test",
+    "test": "./node_modules/.bin/mocha --compilers coffee:coffee-script/register test/*",
     "build": "bin/build"
   },
   "author": "Minh Dat Daniel LE",
