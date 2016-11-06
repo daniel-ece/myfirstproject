@@ -1,0 +1,28 @@
+extends layout
+
+block head
+  script(src="/js/jquery-2.1.4.min.js")
+  link(rel="stylesheet" href="/css/bootstrap.min.css")
+  link(rel="stylesheet" href="/css/style.css")
+  script(src="/js/bootstrap.min.js")
+  script(src="/js/d3.min.js")
+
+block content
+  div.container
+    div.col-md-6.col-md-offset-3
+      h1 Hello Daniel !
+      button(type='button' class='btn-success btn' id="show-metrics") Bring the metrics
+      .chart
+
+    script
+      :coffee-script
+        $('#show-metrics').click (e) ->
+          e.preventDefault()
+          $.getJSON "/metrics", {}, (data) ->
+            d3.select(".chart")
+              .selectAll("div")
+              .data(data)
+              .enter().append("div")
+              .text((d) ->
+                return new Date(d.timestamp*1000) + " (value: " + d.value + ")"
+              )

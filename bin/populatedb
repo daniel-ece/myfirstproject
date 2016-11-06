@@ -1,0 +1,9 @@
+#!/usr/bin/env coffee
+metric = require '../src/metrics'
+for i in [0...10]
+  met = [
+    timestamp:"1478"+i+"45361", value:i,
+    timestamp:"1479"+i+"55361", value:2*i
+  ]
+  metric.put i, met, (err) ->
+  console.log 'Metrics saved'

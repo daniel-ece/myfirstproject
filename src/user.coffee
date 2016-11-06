@@ -1,5 +1,5 @@
 module.exports =
   get: (user, callback) ->
-    callback user
+    return callback user
   save: (id, callback) ->
-    callback id
+    return callback id
