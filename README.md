@@ -2,7 +2,11 @@
 
 ![Build](https://travis-ci.org/daniel-ece/myfirstproject.svg?branch=master)
 
-Simple demo that displays a page "Hello Daniel" using javascript(NodeJS) and coffee-script
+Simple dashboard app :
+* User login
+* A user can insert metrics
+* A user can retrieve his metrics in a graph
+* A user can only access his own metrics
 
 ## Requirement
 ### For using coffee-script
@@ -20,8 +24,10 @@ npm install should
 ```
 chmod +x bin/
 ```
+Look at the dependencies in package.JSON
 
 ## Run
+Run the app on : http://localhost:1337
 ```
 bin/start
 ```
@@ -31,6 +37,7 @@ npm start
 ```
 
 ## Test
+Execute some unit tests
 ```
 bin/test
 ```
@@ -40,6 +47,7 @@ npm test
 ```
 
 ## Build
+Transpile coffee-scripts' files into javascript
 ```
 bin/build
 ```
