@@ -46,7 +46,7 @@ or
 npm test
 ```
 
-## Build
+## Transpilers
 Transpile coffee-scripts' files into javascript
 ```
 bin/build
@@ -54,4 +54,23 @@ bin/build
 or
 ```
 npm build
+```
+
+Transpile stylus into css
+```
+bin/stylus
+```
+or
+```
+npm stylus
+```
+
+## Populate the database
+Populate the database with dummy users and metrics
+```
+bin/populatedb
+```
+or
+```
+npm populatedb
 ```
