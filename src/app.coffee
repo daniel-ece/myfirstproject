@@ -1,40 +1,46 @@
-http = require 'http'
-user = require './user.coffee'
-metrics = require './metrics.coffee'
-express = require 'express'
-bodyparser = require 'body-parser'
+#variables
+http = require "http"
+express = require "express"
+morgan = require "morgan"
+bodyparser = require "body-parser"
+cookieParser = require "cookie-parser"
 
 app = express()
+server = require("http").Server(app)
+io = require("socket.io")(server)
 
+#configuration of session db
+session = require "express-session"
+LevelStore = require("level-session-store")(session)
+
+app.use session
+  secret: "MyAppSecret"
+  store: new LevelStore "./db/sessions"
+  resave: true
+  saveUninitialized: true
+
+#check authentication
+authenticationCheck = (req, res, next) ->
+  if req.session.signIn == false
+    res.redirect "/signin"
+  else
+    next()
+
+#use
+app.use "/", express.static "#{__dirname}/../public"
 app.use bodyparser.json()
 app.use bodyparser.urlencoded()
+app.use cookieParser()
 
-app.set 'port', 1337
-app.set 'view engine', 'pug'
-app.set 'views', "#{__dirname}/../views"
+app.use require("./routes/authentication.coffee")
+app.use authenticationCheck, require("./routes/user.coffee")
+app.use authenticationCheck, require("./routes/user-metrics.coffee")
 
-app.use '/', express.static "#{__dirname}/../public"
+#set
+app.set "port", 1337
+app.set "view engine", "pug"
+app.set "views", "#{__dirname}/../views"
 
-app.get "/", (req, res) ->
-  res.render "index", {}
-
-app.get "/metrics(/:id)?", (req, res) ->
-  metrics.get req.params.id, (err, value) ->
-    throw next err if err
-    res.status(200).json value
-
-app.post "/metrics/:id", (req, res) ->
-  metrics.put req.params.id, req.body, (err) ->
-    throw next err if err
-    res.status(200).send()
-
-app.delete "/metrics/:id", (req,res) ->
-  metrics.remove req.params.id, (ok) ->
-    if ok
-      res.status(200).send()
-    else
-      res.status(404).send()
-
-
-app.listen app.get('port'), ->
-  console.log "listening on port #{app.get 'port'}"
+#start server
+server.listen app.get("port"), ->
+  console.log "listening on port #{app.get "port"}"

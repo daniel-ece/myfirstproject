@@ -64,10 +64,6 @@ module.exports =
   ###
   remove: (id, callback) ->
     this.get id, (err, metrics) ->
-      if !metrics.length
-        callback false
-        return
-
       toDelete = []
       for m in metrics
         key = "metric:#{m.id}:#{m.timestamp}"

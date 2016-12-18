@@ -1,9 +1,41 @@
 #!/usr/bin/env coffee
-metric = require '../src/metrics'
-for i in [0...10]
-  met = [
-    timestamp:"1478"+i+"45361", value:i,
-    timestamp:"1479"+i+"55361", value:2*i
-  ]
-  metric.put i, met, (err) ->
-  console.log 'Metrics saved'
+dbMetrics = require("../src/db")("#{__dirname}/../db/metrics")
+dbUsers = require("../src/db")("#{__dirname}/../db/user")
+dbUserMetric = require("../src/db")("#{__dirname}/../db/user-metric")
+
+wsMetrics = dbMetrics.createWriteStream()
+wsUserMetric = dbUserMetric.createWriteStream()
+
+#add user
+user =
+  username: "daniel"
+  pwd: "danielpassword"
+
+console.log "create user :"
+console.log "username : " + user.username
+console.log "password : " + user.pwd
+
+dbUsers.put "user:"+user.username,
+  "#{user.pwd}",
+  () ->
+    console.log "add successfully user"
+
+#add 2 set of metrics for the user
+for i in [0...2]
+  id = i
+  #add 5 metrics
+  for j in [0...5]
+    timestamp = "148" + j + "5555"
+    value = j+2
+
+    #write metrics into db
+    wsMetrics.write
+      key: "metric:#{id}:#{timestamp}"
+      value: value
+
+  wsUserMetric.write
+    key: "user-metrics:#{user.username}:#{id}"
+    value: true
+
+wsUserMetric.end()
+wsMetrics.end()

@@ -1,0 +1,23 @@
+extends layout
+
+block head
+  script(src="/js/jquery-2.1.4.min.js")
+  link(rel="stylesheet" href="/css/bootstrap.min.css")
+  link(rel="stylesheet" href="/css/style.css")
+  script(src="/js/bootstrap.min.js")
+  script(src="/js/app.js")
+  script(src="/js/d3.js")
+  script(src="/js/d3-line-chart.js")
+
+block content
+  .div(id="tooltip" class="hidden")
+    p(class="title")
+    p(class="desc")
+    ul(class="values")
+  .container
+    h2 Hello #{name} !
+    button.btn.btn-warning.pull-right(href='/signout' onClick='document.location.href="/signout"') SignOut
+    button.btn.btn-success.pull-left(id="show-metrics") Bring the metrics
+  .container
+    .div(id="myMetrics")
+      h1 My Metrics

@@ -1,4 +1,4 @@
-db = require("./db")("#{__dirname}/../db/user")
+db = require("./db")("#{__dirname}/../db/user-metric")
 
 module.exports =
   ###
@@ -9,46 +9,44 @@ module.exports =
     'callback'  Callback function
   ###
   get: (username, callback) ->
-    user = {}
+    metricsId = []
+
     rs = db.createReadStream()
 
     rs.on "data", (data) ->
-      [_, _username] = data.key.split ":"
-      [_pwd] = data.value.split ":"
-      if _username == username
-        user =
-          username: _username
-          pwd: _pwd
+      [_, _username, _userMetricId] = data.key.split ":"
+      if data.value and _username is username
+        metricsId.push _userMetricId
     rs.on "error", callback
     rs.on "close", ->
-      callback null, user
+      callback null, metricsId
   ###
-    'save(username, password, callback)'
+    'save(username, mId, callback)'
     ----------------------
     Parameters
     'username'  Username
-    'password'  Password
+    'mId'       Id metric
     'callback'  Callback function
   ###
-  save: (username, password, callback) ->
+  save: (username, mId, callback) ->
     ws = db.createWriteStream()
 
     ws.on "error", callback
     ws.on "close", callback
 
-    ws.write
-      key: "user:#{username}"
-      value: "#{password}"
+    for m in mId
+      ws.write
+        key: "user-metric:#{username}:#{m}"
+        value: true
     ws.end()
-
   ###
-    'remove(username, callback)'
+    'remove(username, mId, callback)'
     ----------------------
     Parameters
     'username'  Username
+    'mId'       Id metric
     'callback'  Callback function
   ###
-  remove: (username, callback) ->
-    toDel = [{type: "del", key: "user:#{username}"}]
-    db.batch toDel, (err) ->
-      callback err
+  remove: (username, mId, callback) ->
+    db.del "user-metric:#{username}:#{mId}" , (err) ->
+      callback(err)
