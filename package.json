@@ -7,7 +7,8 @@
     "start": "bin/start",
     "test": "./node_modules/.bin/mocha --compilers coffee:coffee-script/register test/*",
     "build": "bin/build",
-	  "populatedb": "bin/populatedb"
+	  "populatedb": "bin/populatedb",
+    "stylus": "bin/stylus"
   },
   "author": "Minh Dat Daniel LE, Vincent RICARD",
   "license": "ISC",
